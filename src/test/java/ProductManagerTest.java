@@ -8,7 +8,9 @@ public class ProductManagerTest {
 
   Product product = new Product(1, "Не книга и не смартфон", 1_000);
   Book book = new Book(2, "Самая интересная книга", 2_000, "Незнайка");
-  Smartphone smartphone = new Smartphone(3, "Xiaomi Mi 8 Pro", 10_000, "Xiaomi");
+  Smartphone smartphone = new Smartphone(3, "Mi 8 Pro", 10_000, "Xiaomi");
+
+
 
   @Test
   public void test() {
@@ -33,5 +35,17 @@ public class ProductManagerTest {
     //Поищем то, чего нет
     Product[] expectedArray3 = {};
     Assertions.assertArrayEquals(expectedArray3, manager.searchBy("ничего"));
+
+    //Поищем книгу по автору
+    Product[] expectedArrayByAuthor = {book};
+    Assertions.assertArrayEquals(expectedArrayByAuthor, manager.searchBy("Незнайка"));
+
+    //Поищем смартфон по вендору
+    Product[] expectedArrayByVendor = {smartphone};
+    Assertions.assertArrayEquals(expectedArrayByVendor, manager.searchBy("Xiaomi"));
+
+    //Поищем смартфон по названию
+    Product[] expectedArrayByName = {smartphone};
+    Assertions.assertArrayEquals(expectedArrayByName,manager.searchBy("8 Pro"));
   }
 }
