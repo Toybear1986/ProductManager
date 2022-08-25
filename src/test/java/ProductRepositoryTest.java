@@ -1,14 +1,9 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import ru.netology.*;
-
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.doReturn;
 
 public class ProductRepositoryTest {
 
-  ProductRepository mock = Mockito.mock(ProductRepository.class);
   Product product = new Product(1, "Не книга и не смартфон", 1_000);
   Book book = new Book(2, "Самая интересная книга", 2_000, "Незнайка");
   Smartphone smartphone = new Smartphone(3, "Xiaomi Mi 8 Pro", 10_000, "Xiaomi");
@@ -31,22 +26,25 @@ public class ProductRepositoryTest {
     Assertions.assertArrayEquals(expectedWithoutRemoved, repo.findAll());
   }
 
-/*  @Test
-  public void NullException() {
-    doReturn(null).when(mock).findAll(); //Пробуем найти продукты в пустом массиве
-    doNothing().when(mock).removeById(4); // Пробуем удалить из пустого массива
-  }*/
-
   @Test
-  public void test2() {
+  public void testExceptions() {
     ProductRepository repo = new ProductRepository();
     //Добавление
     repo.save(product);
     repo.save(book);
     repo.save(smartphone);
 
-    Assertions.assertThrows(NegativeIdException.class, () -> {
-      repo.removeById(-100);
-    });
+    //Проверяем удаление продукта по Id, чтобы убедиться, что все работает после правок
+    repo.removeById(1);
+    Product[] expectedWithoutRemoved = {book, smartphone};
+    Assertions.assertArrayEquals(expectedWithoutRemoved, repo.findAll());
+
+    //Проверяем эксепшн при значениее несуществующем (удаленном в первом случае) в массиве
+    Assertions.assertThrows(NotFoundException.class, () -> repo.removeById(1));
+
+    //Проверяем эксепшн при отрицательном значении
+    Assertions.assertThrows(NotFoundException.class, () -> repo.removeById(-100));
+
+
   }
 }

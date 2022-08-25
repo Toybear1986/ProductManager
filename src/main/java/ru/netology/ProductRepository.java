@@ -14,29 +14,21 @@ public class ProductRepository {
     return products;
   }
 
-  public void removeById(int id) /*throws Exception - для 3 варианта*/ {
-/*    if (id < 0) {   //Из лекции по экспешенам вариант 1
-      RuntimeException e = new RuntimeException(
-              "ID не может быть отрицательным: " + id
-      );
-      throw e;
-    }*/
-/*    if (id < 0) {     //Из лекции по экспешенам вариант 2
-      throw new RuntimeException(
-              "ID не может быть отрицательным: " + id
-      );
-    }*/
-/*    if (id < 0) {     //Из лекции по экспешенам вариант 3
-      throw new Exception(
-              "ID не может быть отрицательным: " + id
-      );
-    }*/
-/*    if (id < 0) {
-      throw new NegativeIdException(
-              "ID не может быть отрицательным: " + id
-      );
-    }*/
+  public Product findById(int id) {
+    for (Product product : products) {
+      if (id == product.getId()) {
+        return product;
+      }
+    }
+    return null;
+  }
 
+  public void removeById(int id) {
+    if (findById(id) == null) {
+      throw new NotFoundException(
+              "Element with id: " + id + " not found"
+      );
+    }
     Product[] tmp = new Product[products.length - 1];
     int copyToIndex = 0;
     for (Product product : products) {

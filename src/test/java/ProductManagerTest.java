@@ -11,7 +11,6 @@ public class ProductManagerTest {
   Smartphone smartphone = new Smartphone(3, "Mi 8 Pro", 10_000, "Xiaomi");
 
 
-
   @Test
   public void test() {
     Product[] products = new Product[0];
@@ -46,6 +45,6 @@ public class ProductManagerTest {
 
     //Поищем смартфон по названию
     Product[] expectedArrayByName = {smartphone};
-    Assertions.assertArrayEquals(expectedArrayByName,manager.searchBy("8 Pro"));
+    Assertions.assertArrayEquals(expectedArrayByName, manager.searchBy("8 Pro"));
   }
 }
