@@ -7,6 +7,7 @@ public class ProductRepositoryTest {
   Product product = new Product(1, "Не книга и не смартфон", 1_000);
   Book book = new Book(2, "Самая интересная книга", 2_000, "Незнайка");
   Smartphone smartphone = new Smartphone(3, "Xiaomi Mi 8 Pro", 10_000, "Xiaomi");
+  Product newProduct = new Product(4, "Тест", 123);
 
   @Test
   public void test() {
@@ -45,6 +46,13 @@ public class ProductRepositoryTest {
     //Проверяем эксепшн при отрицательном значении
     Assertions.assertThrows(NotFoundException.class, () -> repo.removeById(-100));
 
+    //Проверяем добавление нового продукта
+    repo.save(newProduct);
+    Product[] expectedArray = {book, smartphone, newProduct};
+    Assertions.assertArrayEquals(expectedArray, repo.findAll());
+
+    //Проверяем эксепшн при добавлении нового продукта с существующим id
+    Assertions.assertThrows(AlreadyExistsException.class, () -> repo.save(newProduct));
 
   }
 }
