@@ -1,10 +1,7 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import ru.netology.Book;
-import ru.netology.Product;
-import ru.netology.ProductRepository;
-import ru.netology.Smartphone;
+import ru.netology.*;
 
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
@@ -34,10 +31,22 @@ public class ProductRepositoryTest {
     Assertions.assertArrayEquals(expectedWithoutRemoved, repo.findAll());
   }
 
-  @Test
+/*  @Test
   public void NullException() {
     doReturn(null).when(mock).findAll(); //Пробуем найти продукты в пустом массиве
     doNothing().when(mock).removeById(4); // Пробуем удалить из пустого массива
-  }
+  }*/
 
+  @Test
+  public void test2() {
+    ProductRepository repo = new ProductRepository();
+    //Добавление
+    repo.save(product);
+    repo.save(book);
+    repo.save(smartphone);
+
+    Assertions.assertThrows(NegativeIdException.class, () -> {
+      repo.removeById(-100);
+    });
+  }
 }
