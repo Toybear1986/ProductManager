@@ -2,13 +2,11 @@ package ru.netology;
 
 public class ProductManager {
   // добавьте необходимые поля, конструкторы и методы
-  private ProductRepository repository;
+  protected ProductRepository repository;
 
   public ProductManager(ProductRepository repository) {
     this.repository = repository;
   }
-
-  private Product[] products = new Product[0];
 
   public void add(Product product) {
     repository.save(product);
